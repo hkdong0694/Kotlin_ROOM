@@ -14,6 +14,7 @@ data class Contacts(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     var name: String,
-    var tel: String,
-    var time: String
+    var age: Int,
+    var telNo: String,
+    var image: String
 )
