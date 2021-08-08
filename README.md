@@ -1,6 +1,14 @@
 # Kotlin_ROOM
 모바일 로컬 데이터베이스를 이용하여 데이터 저장 및 꺼내오는 Sample 예제
 
+# ROOM 이란?
+
+Room은 스마트폰 내장 DB에 데이터베이스를 저장하기 위해 사용하는 라이브러리이다.
+
+과거에는 SQLite 를 사용하였지만 SQLite는 사용하기 어렵고, 시간이 오래걸리며, 오류가 쉽게 발생할 수 있다는 이유로 구글에서는 SQLite 대신 ROOM을 사용하는 것을 권장하고 있다.
+
+ROOM -> SQLite 의 단점을 보완하여 만들어진 라이브러리
+
 ## ContactDatabase.kt
 
 ~~~kotlin
