@@ -12,6 +12,8 @@ import androidx.room.RoomDatabase
  */
 abstract class ContactDatabase : RoomDatabase() {
 
+    // DataBase와 연결되는 DAO ( Data Access Object )
+    // 실질적으로 데이터베이스에 접근하는 객체
     abstract fun contactsDao(): ContactDAO
 
     companion object {
