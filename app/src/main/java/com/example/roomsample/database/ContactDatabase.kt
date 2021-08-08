@@ -1,6 +1,7 @@
 package com.example.roomsample.database
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
@@ -10,6 +11,7 @@ import androidx.room.RoomDatabase
  * Created by 한경동 (Joel) on 2021/08/04.
  * Description:
  */
+@Database(entities = [Contacts::class], version = 1, exportSchema = false)
 abstract class ContactDatabase : RoomDatabase() {
 
     // DataBase와 연결되는 DAO ( Data Access Object )

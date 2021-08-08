@@ -14,16 +14,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.roomsample.database.ContactDatabase
 import com.example.roomsample.database.Contacts
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var db: ContactDatabase?= null
+    private var dbData : List<Contacts> = emptyList()
+    private lateinit var dataAdapter: DataAdapter
+
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK) {
-            val intent = result.data
-
+            dataAdapter.setData(db?.contactsDao()?.getAll()!!)
         }
     }
 
@@ -31,9 +35,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        db = ContactDatabase.getInstance(this)
+        val data = db?.contactsDao()?.getAll()!!
+        if(data.isNotEmpty()) {
+            dbData = data
+        }
+
         rv_main.apply {
             layoutManager = LinearLayoutManager(applicationContext)
-            adapter = DataAdapter()
+            dataAdapter = DataAdapter(dbData)
+            adapter = dataAdapter
         }
 
         btn_add.setOnClickListener {
@@ -42,9 +53,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    class DataAdapter() : RecyclerView.Adapter<ViewHolder>() {
+    class DataAdapter(data : List<Contacts>) : RecyclerView.Adapter<ViewHolder>() {
 
-        private var itemData: List<Contacts> = emptyList()
+        private var itemData: List<Contacts> = data
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view =
@@ -55,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val data = itemData[position]
-            Glide.with(holder.itemView).load(data.image).into(holder.image)
+            // Glide.with(holder.itemView).load(data.image).into(holder.image)
             holder.index.text = "${position + 1}"
             holder.name.text = data.name
             holder.age.text = data.age.toString()
@@ -64,6 +75,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int {
             return itemData.size
+        }
+
+        fun setData(items : List<Contacts>) {
+            itemData = items
+            notifyDataSetChanged()
         }
 
     }

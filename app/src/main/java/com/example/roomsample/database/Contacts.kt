@@ -1,5 +1,6 @@
 package com.example.roomsample.database
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -15,6 +16,5 @@ data class Contacts(
     val id: Long,
     var name: String,
     var age: Int,
-    var telNo: String,
-    var image: String
+    var telNo: String
 )

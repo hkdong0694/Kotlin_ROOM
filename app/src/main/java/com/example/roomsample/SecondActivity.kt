@@ -13,11 +13,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.example.roomsample.database.ContactDatabase
+import com.example.roomsample.database.Contacts
 import kotlinx.android.synthetic.main.activity_second.*
 import java.net.URI
 
 class SecondActivity : AppCompatActivity() {
-
+    private var db: ContactDatabase?= null
     private var imageData : Uri? = null
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -31,13 +33,18 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-
+        db = ContactDatabase.getInstance(this)
         iv_main.setOnClickListener {
             goToGalley()
         }
 
         btn_save.setOnClickListener {
             if(checkText() == 0) {
+                var saveData = Contacts(0, et_name.text.toString(),
+                    Integer.parseInt(et_age.text.toString()),
+                    et_tel.text.toString(),
+                    )
+                db?.contactsDao()?.insertAll(saveData)
                 // DB 데이터 저장
                 setResult(RESULT_OK)
                 finish()
