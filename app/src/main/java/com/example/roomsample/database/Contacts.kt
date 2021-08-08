@@ -16,5 +16,6 @@ data class Contacts(
     var name: String,
     var age: Int,
     var telNo: String,
+    // 이미지 Uri 상태로 저장 x ( Uri -> String ) 으로 변환 후 저장
     var imageUri: String
 )
