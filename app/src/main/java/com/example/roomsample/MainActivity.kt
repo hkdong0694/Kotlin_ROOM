@@ -2,6 +2,7 @@ package com.example.roomsample
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val data = itemData[position]
-            // Glide.with(holder.itemView).load(data.image).into(holder.image)
+            Glide.with(holder.itemView).load(Uri.parse(data.imageUri)).into(holder.image)
             holder.index.text = "${position + 1}"
             holder.name.text = data.name
             holder.age.text = data.age.toString()

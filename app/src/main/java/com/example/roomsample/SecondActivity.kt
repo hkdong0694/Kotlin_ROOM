@@ -21,11 +21,13 @@ import java.net.URI
 class SecondActivity : AppCompatActivity() {
     private var db: ContactDatabase?= null
     private var imageData : Uri? = null
+    private var imageString: String?= null
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK) {
             imageData = result.data?.data
+            imageString = imageData.toString()
             Glide.with(this).load(imageData).into(iv_main)
         }
     }
@@ -43,7 +45,7 @@ class SecondActivity : AppCompatActivity() {
                 var saveData = Contacts(0, et_name.text.toString(),
                     Integer.parseInt(et_age.text.toString()),
                     et_tel.text.toString(),
-                    )
+                    imageString!!)
                 db?.contactsDao()?.insertAll(saveData)
                 // DB 데이터 저장
                 setResult(RESULT_OK)
